@@ -10,12 +10,15 @@ How to integrate Tableau with Snowflake OAuth, SAML and MFA
 - [Configure OAuth Partner Integration on Snowflake](#configure-oauth-partner-integration-on-snowflake)
 - [Using OAuth for Snowflake in Tableau Desktop Connections](#using-oauth-for-snowflake-in-tableau-desktop-connections)
 - [Using Snowflake Custom Roles in Tableau OAuth Credentials](#using-snowflake-custom-roles-in-tableau-oauth-credentials)
+- [Summary](#summary)
 
 ## Introduction
 
 Tableau Desktop and Server supports OAuth as an authentication mechanism for Snowflake. This article provides some guidance on how to set up OAuth on Snowflake and how leverage OAuth as a Tableau Desktop content creator and a Tableau Server content consumer. We will also cover how to take advantage of Snowflake's Role model from Tableau.
 
 Although Tableau supports a direct SAML authentication scheme for Snowflake, in most situations you should consider OAuth as the preferred scheme for Tableau even you require SAML authentication. By using OAuth you can take advantage of interactive MFA for Content Creators and Consumers as well Seamless Sign-on for Content Consumers.
+
+By leveraging Roles and Secure Views on Snowflake you can also implement fine grained permission control and Row and Column Level Security. This article will focus on the Tableau requirements to enable this but you can get more details about [Secure Views](https://docs.snowflake.com/en/user-guide/views-secure.html#working-with-secure-views) for example from the Snowflake documentation.
 
 ## Requirements
 
@@ -268,3 +271,45 @@ GRANT SELECT
     ON ALL VIEWS IN SCHEMA DEMO_DB.PUBLIC
     TO ROLE role_access_to_sf1;
 ```
+
+We can now create some content with a user that has the role and consume it with a user with the role. We could do this exactly the same way as above but this time we will create the consumer's Credentials on Tableau Server before publishing and consuming to show how we can create and Save Credentials on Tableau Server.
+
+In the Account Settings for Boris B. click **Add** next to Snowflake in the Saved Credentials section. Enter the server name _and_ the role we just created.
+
+![Add a New Saved Credential](images/2020-05-05-09-50-14.png)
+
+Click **Add** and we will authenticate to the our SAML IdP and authorize.
+
+![BB Okta Login](images/2020-05-05-09-58-51.png)
+
+Note that this time the Authorization is for our new Role.
+
+![BB SF1 Authorization](images/2020-05-05-10-00-52.png)
+
+After clicking **Allow** we now have a second credential for Boris B. for the Role ```role_access_to_sf1```.
+
+Now we will create some content using the ```role_access_to_sf1```. In desktop we will create a new Viz as RCOTTISS_SAML and publish it.
+
+![Create Viz3](images/2020-05-05-10-58-00.png)
+
+![Publish Viz3](images/2020-05-05-10-59-14.png)
+
+![View Viz3](images/2020-05-05-10-59-43.png)
+
+RCOTTISS_SAML does not have a Saved Credential for Role ```role_access_to_sf1``` so I get prompted to create the credential.
+
+![Viz Authenticate](images/2020-05-05-11-01-18.png)
+
+After Authorizing I can view on Server.
+
+![View Viz3](images/2020-05-05-11-02-13.png)
+
+If Boris B. views Viz3 he will _not_ be prompted for credentials because the credential already exists.
+
+![BB View Viz3](images/2020-05-05-11-03-48.png)
+
+Note the User and the Role.
+
+## Summary
+
+We have shown how Tableau customers can leverage Snowflakes support for strong security and access control by using Tableau's support for Snowflake OAuth using Saved Credentials that can be tied to Snowflakes security and permission model in the form of Roles and Secure Views. In most cases OAuth will be the preferred authentication mechanism for Tableau to Snowflake as will give the best balance of functionality, strong security and ease of use for users.
