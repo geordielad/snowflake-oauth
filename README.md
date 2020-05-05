@@ -28,12 +28,12 @@ We will use Tableau Desktop and Server 2020.1 and the latest version of the Snow
 
 It will be useful if you can have a Snowflake View that displays the current User and Role as this will help us confirm that Tableau is authenticating with the expected user context even when utilizing SSO later on in this article.
 
-I created a copy of a Table from the SNOWFLAKE_SAMPLE_DATA Schema into the DEMO_DB Schema but you can use any table and Schema you prefer but you might want to make sure you have easy control over users and roles for your test schema. Snowflake has some very useful functions to show the current user, role etc. See [Scalar Functions Reference Dcoumentation](https://docs.snowflake.com/en/sql-reference/intro-summary-operators-functions.html#scalar-functions) for details.
+I created a copy of a Table from the SNOWFLAKE_SAMPLE_DATA Schema into the DEMO_DB Schema but you can use any table and Schema you prefer but you might want to make sure you have easy control over users and roles for your test schema. Snowflake has some very useful functions to show the current user, role etc. See [Scalar Functions Reference Documentation](https://docs.snowflake.com/en/sql-reference/intro-summary-operators-functions.html#scalar-functions) for details.
 
 We will create a view with some added functions:
 
 ``` SQL
-CREATE OR REPLACE VIEW DEMO_DB.PUBLIC.CUSTOMER_VIEW 
+CREATE OR REPLACE VIEW DEMO_DB.PUBLIC.CUSTOMER_VIEW
 (
    C_CUSTKEY
   ,C_NAME
@@ -209,7 +209,7 @@ Even though Boris has no saved credentials for Snowflake if he views **Snowflake
 
 The reason for no sign in prompt is because, when we published Viz2, we effective told Tableau Server to use the Credentials Saved for RCOTTISS_SAML. Note the Role is **PUBLIC** that is the Role we used when connecting on Desktop.
 
-What about **Snowflake Viz1**? 
+What about **Snowflake Viz1**?
 
 Boris will be Prompted to Sign In to Snowflake:
 
@@ -217,7 +217,7 @@ Boris will be Prompted to Sign In to Snowflake:
 
 Selecting Single Sign-On he will need to authenticate to Okta.
 
-**Note**: If you are testing this in the same browser you will need to clear your Okta Session from the previouis user because you may have an active session for your SAML IdP.
+**Note**: If you are testing this in the same browser you will need to clear your Okta Session from the previous user because you may have an active session for your SAML IdP.
 
 ![BB Okta Sign In](images/2020-05-04-18-38-21.png)
 
