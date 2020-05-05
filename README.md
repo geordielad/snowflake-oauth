@@ -306,7 +306,7 @@ After Authorizing I can view on Server.
 
 If Boris B. views Viz3 he will _not_ be prompted for credentials because the credential already exists.
 
-![BB View Viz3](images/2020-05-05-11-03-48.png)
+![BB View Viz3](images/2020-05-05-11-35-55.png)
 
 Note the User and the Role.
 
