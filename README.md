@@ -26,6 +26,8 @@ For this article we assume you are able to configure the  Oauth Partner Integrat
 
 We will use Tableau Desktop and Server 2020.1 and the latest version of the Snowflake ODBC Driver (V2.21.2 as of May 4th 2020) installed on the desktop client and the server.
 
+**Update - February 2021:** Starting with Tableau 2020.4 you can use a new OAuth Service that supports AWS PrivateLink or Azure Private Link VPCs withou the need to whitelist some IP addresses. [See the Tableau Help page for Snowflake](https://help.tableau.com/current/server/en-us/config_oauth_snowflake.htm) You may need to contact Snowflake Support.
+
 It will be useful if you can have a Snowflake View that displays the current User and Role as this will help us confirm that Tableau is authenticating with the expected user context even when utilizing SSO later on in this article.
 
 I created a copy of a Table from the SNOWFLAKE_SAMPLE_DATA Schema into the DEMO_DB Schema but you can use any table and Schema you prefer but you might want to make sure you have easy control over users and roles for your test schema. Snowflake has some very useful functions to show the current user, role etc. See [Scalar Functions Reference Documentation](https://docs.snowflake.com/en/sql-reference/intro-summary-operators-functions.html#scalar-functions) for details.
